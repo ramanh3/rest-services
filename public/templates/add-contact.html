@@ -1,0 +1,42 @@
+﻿<h1>Add Contact</h1>
+<form name="form" ng-submit="add()">
+    <div>
+        <label for="name">Contact Name</label>:
+        <input id="name" ng-model="contact.name" name="name" required />
+        <span style="color:red" ng-show="form.name.$error.required && form.name.$dirty">Name is mandatory!</span>
+
+    </div>
+    <div>
+        <label for="phone">Phone</label>:
+        <input id="phone" ng-model="contact.phone" type="tel" name="phone" required />
+        <span style="color:red" ng-show="form.phone.$error.required && form.phone.$dirty">Phone is mandatory!</span>
+    </div>
+    <div>
+        <label for="email">email</label>:
+        <input id="email" ng-model="contact.email" name="email" type="email" />
+        <span style="color:red" ng-show="form.email.$error.email && form.email.$dirty">Not a valid eMail address!</span>
+    </div>
+
+    <div>
+        <label for="resident">Resident:</label>
+        <span multi-select
+              input-model="countries"
+              button-label="name"
+              output-model="contact.resident"
+              item-label="name desc"
+              tick-property="ticked">
+        </span>
+
+    </div>
+
+    <button type="submit" class="btn btn-large btn-primary" ng-disabled="form.$invalid">Save</button>
+
+</form>
+<button ng-click="setData()" class="btn btn-danger">Set Avi as the name</button>
+
+
+<br />
+<br />
+<br />
+
+<rsa-contact contact="contact" />

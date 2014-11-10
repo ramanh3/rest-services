@@ -1,0 +1,20 @@
+<accordion>
+    <accordion-group heading="{{contact.name}} Details" is-open="isOpen"  >
+		<div style="float: left; display: inline-block;">
+			<img src="img/face.png" style="width:50px; height: :50px"/>
+		</div>
+		<div style="display: inline-block;">
+			<h3><div> Name: {{contact.name}} </div></h3>	
+			<div> E-mail: {{contact.email}} </div>	
+	
+			 <div> Resident:
+			 	<span ng-hide="contact.resident.length > 0">Please Select Country</span>
+				<ul ng-show="contact.resident.length > 0">
+					<li ng-repeat=" res in contact.resident | orderBy: 'name'">         
+						Name: {{res.name }} (ID: {{res.id}})
+		    		</li>
+				</ul> 
+			</div>
+		</div>
+ </accordion-group>
+ 

@@ -1,0 +1,7 @@
+﻿<h1>Manage Contacts</h1>
+
+<alert ng-show="userName" type="success" close="closeAlert()">User {{userName}} was added successfully</alert>
+<div ng-repeat=" contact in contacts | orderBy: 'name'">
+    <span rsa-contact contact="contact">
+</div>
+ 
