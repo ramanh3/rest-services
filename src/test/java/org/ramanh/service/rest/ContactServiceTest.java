@@ -3,7 +3,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +43,7 @@ public class ContactServiceTest {
 		perform.andExpect(status().isOk());
 		perform.andExpect(content().contentType(CONTENT_TYPE));
 		perform.andExpect(jsonPath("$").isArray());
-		// perform.andExpect(jsonPath("$").value(hasSize(1000)));
+		perform.andExpect(jsonPath("$").value(hasSize(15)));
 	}
 
 }

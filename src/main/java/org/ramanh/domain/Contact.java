@@ -3,6 +3,7 @@ package org.ramanh.domain;
 import java.util.List;
 
 public class Contact {
+	private Integer id;
 	private String name;
 	private String password;
 	private String email;
@@ -39,4 +40,13 @@ public class Contact {
 	public void setResident(List<Resident> resident) {
 		this.resident = resident;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }
