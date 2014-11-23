@@ -7,14 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.lang.Integer;
+
 import javax.annotation.PostConstruct;
 
 import org.ramanh.domain.Contact;
 import org.ramanh.domain.Resident;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ContactDAOImpl {
+	private static Logger LOG = LoggerFactory.getLogger(ContactDAOImpl.class);
 	private SecureRandom random = new SecureRandom();
 	private List<Contact> contacts;
 	private Map<Integer, Contact> contactsMap;
@@ -24,13 +28,15 @@ public class ContactDAOImpl {
 		contacts = new ArrayList<Contact>();
 		contactsMap = new HashMap<>();
 		random.setSeed(new Date().getTime());
+		LOG.info("==================================================================");
+		LOG.info("|\tid\t|\tname\t|\temail\t|");
 		for (int i = 0; i < 15; i++) {
 			Contact c = new Contact();
 			int id = random.nextInt();
 			c.setId(id);
 			c.setName(String.format("test%s contact%s", i, i));
 			c.setEmail(c.getName().replace(' ', '.') + "@email.com");
-			c.setPassword(String.format("Secreat%s", i));
+			c.setPassword(String.format("Secret%s", i));
 			Resident uk = new Resident();
 			uk.setId(4);
 			uk.setName("UK");
@@ -38,9 +44,10 @@ public class ContactDAOImpl {
 			c.setResident(residents);
 			contacts.add(c);
 			contactsMap.put(id, c);
+			LOG.info("|{}|{}|{}|",c.getId(),c.getName(),c.getEmail());
 		}
-
-		// logger.info("Preloaded %s users",usersMap.size());
+		LOG.info("==================================================================");
+		LOG.info("Preloaded {} users",contacts.size());
 	}
 
 	public List<Contact> getContacts() {
