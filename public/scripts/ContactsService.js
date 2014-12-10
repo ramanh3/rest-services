@@ -1,3 +1,5 @@
 ﻿function ContactService($resource) {
-	  return $resource('contacts',{}, {});
+	  return $resource('contacts',{}, 
+			  {'getAll':  {method:'GET', isArray:true}}
+	  );
 }
