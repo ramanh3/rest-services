@@ -1,7 +1,7 @@
 ﻿/// <reference path="AddContactController.js" />
 (function (){
     var MODULE_NAME = "phonebook";
-    var phoneBookApp = angular.module(MODULE_NAME, ['multi-select', 'ui.bootstrap', 'ngRoute']);
+    var phoneBookApp = angular.module(MODULE_NAME, ['multi-select', 'ui.bootstrap', 'ngRoute' ,'ngResource']);
 
     phoneBookApp.controller('AddContactController', AddContactController);
     phoneBookApp.controller('ManageContactsController', ManageContactsController);
