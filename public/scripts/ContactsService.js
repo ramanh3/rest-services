@@ -1,4 +1,4 @@
-﻿function ContactService() {
+﻿function ContactService($http) {
     this.contactsList = [
          {
              'name': 'Shay',
@@ -25,8 +25,8 @@
         this.contactsList.push(contact);
     };
 
-    this.getAll = function () {
-        return this.contactsList;
+    this.getAll = function ($scope) {
+        return $http.get("contacts");
     };
 
 }
