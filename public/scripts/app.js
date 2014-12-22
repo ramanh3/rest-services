@@ -1,7 +1,7 @@
 ﻿/// <reference path="AddContactController.js" />
 (function (){
     var MODULE_NAME = "phonebook";
-    var phoneBookApp = angular.module(MODULE_NAME, ['multi-select', 'ui.bootstrap', 'ngRoute' ,'ngResource']);
+    var phoneBookApp = angular.module(MODULE_NAME, ['multi-select', 'ui.bootstrap', 'ngRoute']);
 
     phoneBookApp.controller('AddContactController', AddContactController);
     phoneBookApp.controller('ManageContactsController', ManageContactsController);
@@ -38,7 +38,7 @@
 
     });
 
-
+    phoneBookApp.service("contactsService", ContactService);
     phoneBookApp.directive('rsaContact', function () {
         var directive = {};
         directive.scope = {
@@ -53,7 +53,5 @@
         return directive;
 
     });
-
-    phoneBookApp.service("contactsService", ContactService);
 
 })();
