@@ -1,5 +1,5 @@
 ﻿/// <reference path="ContactsService.js" />
-function AddContactController($scope, contactsService, $location) {
+function AddContactController($scope, contactsService, $location,$routeParams) {
     $scope.contact = {
        "name": "shay",
         "phone": "33333",
@@ -28,4 +28,19 @@ function AddContactController($scope, contactsService, $location) {
         id: '3',
         name: 'Israel'
     }];
+    
+    if($routeParams.id){
+    	var responsePromise = contactsService.get($routeParams.id);
+   	    responsePromise.success(function(data, status, headers, config) {
+   	        $scope.contact = data;
+   	    });
+    }
+    
+    $scope.save = function(contact){
+    	var responsePromise = contactsService.save(contact);
+   	    responsePromise.success(function(data, status, headers, config) {
+   	    	$location.path("/manage/"+contact.name);
+   	    });
+    } 
+    
 };

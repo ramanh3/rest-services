@@ -25,8 +25,15 @@
         this.contactsList.push(contact);
     };
 
-    this.getAll = function ($scope) {
+    this.getAll = function () {
         return $http.get("contacts");
     };
+    
+    this.get = function (userId) {
+        return $http.get("contacts/"+userId);
+    };
 
+    this.save = function (contact) {
+        return $http.put("contacts",contact);
+    };
 }
