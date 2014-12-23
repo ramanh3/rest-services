@@ -34,10 +34,12 @@ public class ContactDAOImpl {
 			Contact c = new Contact();
 			int id = random.nextInt();
 			c.setId(id);
-			c.setName(String.format("test%s contact%s", i, i));
+			c.setName(String.format("test%s", i, i));
 			c.setEmail(c.getName().replace(' ', '.') + "@email.com");
 			c.setPassword(String.format("Secret%s", i));
+			c.setPhone(String.format("+555-8989%s%s", i,i));
 			Resident uk = new Resident();
+			
 			uk.setId(4);
 			uk.setName("UK");
 			List<Resident> residents = new ArrayList<Resident>();

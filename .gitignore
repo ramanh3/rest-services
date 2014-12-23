@@ -11,6 +11,6 @@ hs_err_pid*
 .project
 .settings/
 .springBeans
-
+*.log
 #maven stuff
 target/

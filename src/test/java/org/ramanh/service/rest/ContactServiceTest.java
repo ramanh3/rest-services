@@ -1,5 +1,6 @@
 package org.ramanh.service.rest;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -12,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ramanh.Application;
@@ -36,11 +38,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ContextConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class ContactServiceTest {
-	
-	private static String CONTENT_TYPE = String.format("%s;%S", MediaType.APPLICATION_JSON,"charset=UTF-8");
+
+	private static String CONTENT_TYPE = String.format("%s;%S", MediaType.APPLICATION_JSON, "charset=UTF-8");
 	@Autowired
 	private WebApplicationContext wac;
-	
+
 	private MockMvc mockMvc;
 	protected ObjectMapper mapper = new ObjectMapper();
 
@@ -48,7 +50,7 @@ public class ContactServiceTest {
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
-	
+
 	@Test
 	public void testListContacts() throws Exception {
 		MockHttpServletRequestBuilder request = get("/contacts").accept(MediaType.APPLICATION_JSON);
@@ -59,13 +61,13 @@ public class ContactServiceTest {
 		MockHttpServletResponse contactsResponse = perform.andReturn().getResponse();
 		String contactsList = contactsResponse.getContentAsString();
 		Contact[] contacts = mapper.readValue(contactsList, Contact[].class);
-		Assert.assertThat(contacts.length, greaterThanOrEqualTo(15) );
+		Assert.assertThat(contacts.length, greaterThanOrEqualTo(15));
 	}
-	
+
 	@Test
 	public void testGetContact() throws Exception {
 		Contact contact = getFirstContact();
-		MockHttpServletRequestBuilder request = get("/contacts/"+contact.getId());
+		MockHttpServletRequestBuilder request = get("/contacts/" + contact.getId());
 		ResultActions perform = mockMvc.perform(request);
 		perform.andExpect(status().isOk());
 		perform.andExpect(content().contentType(CONTENT_TYPE));
@@ -74,36 +76,36 @@ public class ContactServiceTest {
 		perform.andExpect(jsonPath("$.name").value(contact.getName()));
 		perform.andExpect(jsonPath("$.password").value(contact.getPassword()));
 	}
-	
+
 	@Test
 	public void testUpdateContact() throws Exception {
 		Contact contact = getFirstContact();
-		contact.setName(contact.getName()+" updated");
+		contact.setName(contact.getName() + " updated");
 		String updatedsContactJson = mapper.writeValueAsString(contact);
-		MockHttpServletRequestBuilder request = put("/contacts").content(updatedsContactJson).contentType(MediaType.APPLICATION_JSON);;
+		MockHttpServletRequestBuilder request = put("/contacts").content(updatedsContactJson).contentType(MediaType.APPLICATION_JSON);
+		;
 		ResultActions perform = mockMvc.perform(request);
 		perform.andExpect(status().isNoContent());
-	
+		Contact contactUpdated = getContactById(contact.getId());
+		assertThat("Contact not matching updated one",contact,  equalTo(contactUpdated));
+		assertThat("Contact id was changed after update",contact.getId(),  equalTo(contactUpdated.getId()));
 	}
-	
-	
+
 	@Test
 	public void testAddContact() throws Exception {
 		Contact contact = getFirstContact();
 		contact.setId(null);
-		contact.setName(contact.getName()+" clone");
+		contact.setName(contact.getName() + " clone");
 		String newContactJson = mapper.writeValueAsString(contact);
 		MockHttpServletRequestBuilder request = post("/contacts").content(newContactJson).contentType(MediaType.APPLICATION_JSON);
 		ResultActions perform = mockMvc.perform(request);
 		perform.andExpect(status().isCreated());
-	//	perform.andExpect(header().);
+		//Contact newContact = getContactById(contact.getId());
+		//assertThat("Contact not matching updated one",contact,  equalTo(newContact));
+		//assertNotNull("New contact should have and id",newContact.getId());
 	}
-	
-	
 
-	private Contact getFirstContact() throws Exception,
-			UnsupportedEncodingException, IOException, JsonParseException,
-			JsonMappingException {
+	private Contact getFirstContact() throws Exception, UnsupportedEncodingException, IOException, JsonParseException, JsonMappingException {
 		MockHttpServletRequestBuilder request = get("/contacts").accept(MediaType.APPLICATION_JSON);
 		ResultActions perform = mockMvc.perform(request);
 		perform.andExpect(status().isOk());
@@ -112,5 +114,15 @@ public class ContactServiceTest {
 		String contactsList = contactsResponse.getContentAsString();
 		Contact[] contacts = mapper.readValue(contactsList, Contact[].class);
 		return contacts[0];
+	}
+
+	private Contact getContactById(Integer id) throws Exception {
+		MockHttpServletRequestBuilder request = get(String.format("/contacts/%s", id)).accept(MediaType.APPLICATION_JSON);
+		ResultActions perform = mockMvc.perform(request);
+		MockHttpServletResponse contactsResponse = perform.andReturn().getResponse();
+		perform.andExpect(status().isOk());
+		String contactStr = contactsResponse.getContentAsString();
+		Contact contact = mapper.readValue(contactStr, Contact.class);
+		return contact;
 	}
 }
