@@ -56,7 +56,7 @@ public class ContactServiceCtl implements ContactService{
 	@Override
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Object Updates")
-	public void deleteContact(int id) {
+	public void deleteContact(@PathVariable int id) {
 		contactDAO.delete(id);
 		LOG.info("Contact with id {} deleted",id);
 	}
