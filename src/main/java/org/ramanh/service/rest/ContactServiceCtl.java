@@ -1,14 +1,20 @@
 package org.ramanh.service.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.ramanh.dao.ContactDAOImpl;
+import org.ramanh.dao.DuplicateContactException;
 import org.ramanh.domain.Contact;
 import org.ramanh.service.api.ContactService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,4 +67,14 @@ public class ContactServiceCtl implements ContactService{
 		LOG.info("Contact with id {} deleted",id);
 	}
 
+	@ExceptionHandler(DuplicateContactException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public Map<String, String> handleDuplicateContactException(HttpServletRequest req, DuplicateContactException ex) {
+
+		Map<String, String> errorInfo = new HashMap<>();
+		errorInfo.put("errorCode", "900409");
+		errorInfo.put("message", String.format("Failed to update Contact, a contact with name %s aleady exists!", ex.getMessage()));
+		return errorInfo;
+
+	}
 }
