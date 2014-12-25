@@ -33,7 +33,7 @@
 	<button class="btn btn-large btn-primary" ng-click="remove(contact.id)">Delete</button>
 	<button class="btn btn-large btn-primary" ng-click="cancel()">Cancel</button>
 </form>
-
+<alert ng-show="error" type="danger" close="closeAlert($index)">{{error}}</alert>
 <br />
 <br />
 <br />

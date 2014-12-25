@@ -29,7 +29,9 @@ function AddContactController($scope, contactsService, $location,$routeParams) {
     	
    	    responsePromise.success(function(data, status, headers, config) {
    	    	$location.path("/manage/"+contact.name);
-   	    });
+   	    }).error(function(data, status, headers, config){
+   	    	$scope.error = data.message;
+   	    })
     } 
     
     $scope.remove = function(id){
