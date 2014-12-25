@@ -65,8 +65,13 @@ public class ContactDAOImpl {
 			Integer id = getNextContactId();
 			contact.setId(id);
 		}
-		contacts.add(contact);
-		contactsMap.put(contact.getId(), contact);
+		
+		if(!isContactNameExist(contact)){
+			contacts.add(contact);
+			contactsMap.put(contact.getId(), contact);
+		}else{
+			throw new DuplicateContactException(contact.getName());
+		}
 	}
 
 	private Integer getNextContactId() {
@@ -79,4 +84,13 @@ public class ContactDAOImpl {
 		}
 	}
 
+	protected boolean isContactNameExist(Contact newContact){
+		for (Contact contact : contacts) {
+			if(newContact.getName().equalsIgnoreCase(contact.getName())){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
