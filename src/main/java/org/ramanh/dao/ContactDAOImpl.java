@@ -62,16 +62,18 @@ public class ContactDAOImpl {
 
 	public void saveOrUpdate(Contact contact) {
 		if (null == contact.getId()) {
+			//This is a new contact
+			//make sure we are not creating a duplicate contact name
+			if(isContactNameExist(contact)){
+				throw new DuplicateContactException(contact.getName());
+			}
+		
 			Integer id = getNextContactId();
 			contact.setId(id);
 		}
+		contacts.add(contact);
+		contactsMap.put(contact.getId(), contact);
 		
-		if(!isContactNameExist(contact)){
-			contacts.add(contact);
-			contactsMap.put(contact.getId(), contact);
-		}else{
-			throw new DuplicateContactException(contact.getName());
-		}
 	}
 
 	private Integer getNextContactId() {

@@ -73,7 +73,7 @@ public class ContactServiceCtl implements ContactService{
 
 		Map<String, String> errorInfo = new HashMap<>();
 		errorInfo.put("errorCode", "900409");
-		errorInfo.put("message", String.format("Failed to update Contact, a contact with name %s aleady exists!", ex.getMessage()));
+		errorInfo.put("message", String.format("Failed to create Contact, a contact with name %s aleady exists!", ex.getMessage()));
 		return errorInfo;
 
 	}

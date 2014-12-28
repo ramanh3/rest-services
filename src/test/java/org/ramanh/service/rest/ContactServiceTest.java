@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.ramanh.Application;
 import org.ramanh.domain.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -124,5 +125,22 @@ public class ContactServiceTest {
 		String contactStr = contactsResponse.getContentAsString();
 		Contact contact = mapper.readValue(contactStr, Contact.class);
 		return contact;
+	}
+	
+	@Test
+	public void testAddSameContact() throws Exception {
+		Contact contact = getFirstContact();
+		contact.setId(null);
+		contact.setName(contact.getName() + " clone same name");
+		String newContactJson = mapper.writeValueAsString(contact);
+		MockHttpServletRequestBuilder request = post("/contacts").content(newContactJson).contentType(MediaType.APPLICATION_JSON);
+		ResultActions perform = mockMvc.perform(request);
+		perform.andExpect(status().isCreated());
+		
+		contact.setId(null);
+		String newContactJson2 = mapper.writeValueAsString(contact);
+		MockHttpServletRequestBuilder request2 = post("/contacts").content(newContactJson2).contentType(MediaType.APPLICATION_JSON);
+		ResultActions perform2 = mockMvc.perform(request2);
+		perform2.andExpect(status().is(HttpStatus.CONFLICT.value()));
 	}
 }
