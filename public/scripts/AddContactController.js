@@ -2,7 +2,7 @@
 function AddContactController($scope, contactsService, $location) {
     $scope.contact = {
        "name": "shay",
-        "phone": "33333",
+        "phone": "+555-7733333",
         "email": "shay@rsa.com"
     };
 
@@ -28,4 +28,8 @@ function AddContactController($scope, contactsService, $location) {
         id: '3',
         name: 'Israel'
     }];
+    
+    $scope.cancel = function(){
+    	 $location.path("/manage/");
+    }
 };

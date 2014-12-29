@@ -34,6 +34,9 @@
 			    templateUrl: 'templates/manage-contacts.html',
 			    controller: 'ManageContactsController'
 
+			}).when('/edit/:id', {
+			    templateUrl: 'templates/add-contact.html',
+			    controller: 'AddContactController'
 			});
 
     });
