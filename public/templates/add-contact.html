@@ -1,5 +1,5 @@
 <h1>Add Contact</h1>
-<form name="form" ng-submit="saveOrUpdate(contact)">
+<form name="form" ng-submit="add()">
     <div>
         <label for="name">Contact Name</label>:
         <input id="name" ng-model="contact.name" name="name" required />
@@ -30,10 +30,11 @@
     </div>
 
     <button type="submit" class="btn btn-large btn-primary" ng-disabled="form.$invalid">Save</button>
-	<button class="btn btn-large btn-primary" ng-click="remove(contact.id)">Delete</button>
-	<button class="btn btn-large btn-primary" ng-click="cancel()">Cancel</button>
+
 </form>
-<alert ng-show="error" type="danger" close="closeAlert($index)">{{error.message}}</alert>
+<button ng-click="setData()" class="btn btn-danger">Set Avi as the name</button>
+
+
 <br />
 <br />
 <br />

@@ -1,22 +1,32 @@
-﻿function ContactService($http) {
-  
-    this.getAll = function () {
-        return $http.get("contacts");
-    };
-    
-    this.get = function (userId) {
-        return $http.get("contacts/"+userId);
+﻿﻿function ContactService() {
+    this.contactsList = [
+         {
+             'name': 'Shay',
+             'password': '123456',
+             'email': 'shay@rsa.com',
+             'resident': [{
+                 'id': '4',
+                 'id': 'UK'
+             }]
+         },
+         {
+             'name': 'Eran',
+             'password': '123456',
+             'email': 'eran@rsa.com',
+             'resident': [{
+                 'id': '4',
+                 'id': 'UK'
+             }]
+         }
+
+    ];
+
+    this.addContact = function (contact) {
+        this.contactsList.push(contact);
     };
 
-    this.update = function (contact) {
-        return $http.put("contacts",contact);
+    this.getAll = function () {
+        return this.contactsList;
     };
-    
-    this.save = function (contact) {
-        return $http.post("contacts",contact);
-    };
-    
-    this.remove = function (userId) {
-        return $http.delete("contacts/"+userId);
-    };
+
 }
