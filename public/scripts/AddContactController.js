@@ -11,26 +11,32 @@ function AddContactController($scope, contactsService, $routeParams, $location) 
 	);
    }
 
-   $scope.saveOrUpdate = function (conatct) {
-	    var responsePromise = contactsService.update(conatct) ; //async call
-		  responsePromise.success(
+   $scope.saveOrUpdate = function (contact) {
+	   
+	   var responsePromise ;
+	    if(contact.id){
+	    	responsePromise = contactsService.update(contact) ; //async call
+	    }else{
+	    	responsePromise = contactsService.add(contact) ; //async call	
+	    }
+	    
+		responsePromise.success(
 			function(data, status, headers, config) {
 		 	//Executed on successful return from call
-			 $location.path("/manage/"+conatct.name);
+			 $location.path("/manage/"+contact.name);
 			}
 		);
    }
    
-    $scope.add = function () {
-        contactsService.addContact($scope.contact);
-        //alert($scope.contact.name);
-        $location.path("/manage/"+$scope.contact.name);
-    };
-
-    $scope.setData = function () {
-        $scope.contact.name = "Avi";
-    };
-
+   $scope.delete = function (contactId) {
+	   var responsePromise = contactsService.delete(conatctId) ; //async call
+		  responsePromise.success(
+			function(data, status, headers, config) {
+			//Executed on successful return from call
+			 $location.path("/manage/deleted");
+			}
+		);
+   }
     $scope.countries = [{
         id: '1',
         name: 'UK'
