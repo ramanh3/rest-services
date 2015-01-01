@@ -19,40 +19,40 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContactServiceRestImpl implements ContactService {
 
 	@Autowired
-	private ContactDAOImpl contactDAOImpl;
+	private ContactDAOImpl contactDAO;
 	
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public List<Contact> getContacts() {
-		return contactDAOImpl.getContacts();
+		return contactDAO.getContacts();
 	}
 
 	@Override
 	@RequestMapping(value="{id}",method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public Contact getContact(@PathVariable int id) {
-		return contactDAOImpl.getContact(id);
+		return contactDAO.getContact(id);
 	}
 
 	@Override
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.CREATED,reason="New Object Created")
 	public void addContact(@RequestBody Contact contact) {
-		contactDAOImpl.saveOrUpdate(contact);
+		contactDAO.saveOrUpdate(contact);
 	}
 
 	@Override
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseStatus(value=HttpStatus.NO_CONTENT,reason="New Object Updated")
 	public void updateContact(@RequestBody Contact contact) {
-		contactDAOImpl.saveOrUpdate(contact);
+		contactDAO.saveOrUpdate(contact);
 	}
 
 	@Override
 	@RequestMapping(value="{id}",method=RequestMethod.DELETE)
 	@ResponseStatus(value=HttpStatus.NO_CONTENT,reason="Object returned")
 	public void deleteContact(@PathVariable int id) {
-		contactDAOImpl.delete(id);
+		contactDAO.delete(id);
 	}
 }
