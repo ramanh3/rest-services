@@ -1,4 +1,4 @@
-﻿﻿function ContactService() {
+﻿﻿function ContactService($http) {
     this.contactsList = [
          {
              'name': 'Shay',
@@ -26,7 +26,15 @@
     };
 
     this.getAll = function () {
-        return this.contactsList;
+       return $http.get('contacts');
+    };
+    
+    this.get = function (conatctId) {
+        return $http.get('contacts/'+conatctId);
+    };
+     
+    this.update = function (conatct) {
+         return $http.put('contacts',conatct);
     };
 
 }
