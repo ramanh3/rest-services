@@ -30,10 +30,12 @@
     </div>
 
     <button type="submit" class="btn btn-large btn-primary" ng-disabled="form.$invalid">Save</button>
-	<button class="btn btn-large btn-primary" ng-click="remove(contact.id)">Delete</button>
-	<button class="btn btn-large btn-primary" ng-click="cancel()">Cancel</button>
+	<button class="btn btn-large btn-primary" ng-click="delete(contact.id)">Delete</button>
+	<button class="btn btn-large btn-primary" ng-click="cancel()">Cancel</button>	
 </form>
-<alert ng-show="error" type="danger" close="closeAlert($index)">{{error.message}}</alert>
+
+
+
 <br />
 <br />
 <br />

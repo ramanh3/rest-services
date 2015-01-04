@@ -1,22 +1,22 @@
-﻿function ContactService($http) {
-  
-    this.getAll = function () {
-        return $http.get("contacts");
+﻿﻿function ContactService($http) {
+   
+	this.getAll = function () {
+       return $http.get('contacts');
     };
     
-    this.get = function (userId) {
-        return $http.get("contacts/"+userId);
+    this.get = function (conatctId) {
+        return $http.get('contacts/'+conatctId);
+    };
+     
+    this.update = function (conatct) {
+         return $http.put('contacts',conatct);
     };
 
-    this.update = function (contact) {
-        return $http.put("contacts",contact);
-    };
-    
-    this.save = function (contact) {
-        return $http.post("contacts",contact);
-    };
-    
-    this.remove = function (userId) {
-        return $http.delete("contacts/"+userId);
-    };
+    this.add = function (conatct) {
+        return $http.post('contacts',conatct);
+   };
+   
+   this.delete = function (conatctId) {
+       return $http.delete('contacts/'+conatctId);
+  };
 }

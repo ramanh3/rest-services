@@ -6,7 +6,7 @@
 <script src="lib/angular.js"></script>
 <script src="lib/angular-multi-select/angular-multi-select.js"></script>
 <script src="lib/angular-ui/ui-bootstrap-tpls.js"></script>
-<script src="scripts/angular-route.js"></script>
+<script src="lib/angular-route.js"></script>
 
 <script src="scripts/ContactsService.js"></script>
 <script src="scripts/AddContactController.js"></script>
@@ -21,6 +21,7 @@
 	rel="stylesheet" />
 </head>
 <body ng-app="phonebook">
+	<alert ng-show="errorInfo" type="danger"> {{errorInfo.errorMessage}}</alert>
 	<div ng-view></div>
 </body>
 </html>

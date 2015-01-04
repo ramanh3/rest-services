@@ -5,7 +5,8 @@
 		</div>
 		<div style="display: inline-block;">
 			<h3><div> Name: {{contact.name}} </div></h3>	
-			<div> E-mail: {{contact.email}} </div>	
+			<div> E-mail: {{contact.email}} </div>
+			<div> Phone: {{contact.phone}}</div>	
 	
 			 <div> Resident:
 			 	<span ng-hide="contact.resident.length > 0">Please Select Country</span>
@@ -20,4 +21,3 @@
 			<a ng-href="#edit/{{contact.id}}">Edit</a>
 		</div>
  </accordion-group>
- 

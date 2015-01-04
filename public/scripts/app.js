@@ -21,18 +21,16 @@
     });
 
     phoneBookApp.config(function ($routeProvider, $httpProvider) {
-    	  $httpProvider.interceptors.push(function($q,$rootScope) {
-    	    return {
-    	     	'responseError': function(response) {
-    	        if(response.status == '409') {
-    	        	var errorInfo = response.data;
-    	            console.info('Error code' + errorInfo.errorCode + ": " + errorInfo.message);
-    	            $rootScope.error = errorInfo;
-    	        }
-    	        return $q.reject(response);
-    	      }
-    	    };
-    	  });
+  	  $httpProvider.interceptors.push(function($q,$rootScope) {
+  	    return {
+  	     	'responseError': function(response) {
+  	        	var errorInfo = response.data;
+  	            console.info('Error code' + errorInfo.errorCode + ": " + errorInfo.errorMessage);
+  	            $rootScope.errorInfo = errorInfo;
+  	            return $q.reject(response);
+  	      }
+  	    };
+  	  });
     });
     
     phoneBookApp.config(function ($routeProvider) {
@@ -56,7 +54,7 @@
 
     });
 
-    phoneBookApp.service("contactsService", ContactService);
+
     phoneBookApp.directive('rsaContact', function () {
         var directive = {};
         directive.scope = {
@@ -71,5 +69,7 @@
         return directive;
 
     });
+
+    phoneBookApp.service("contactsService", ContactService);
 
 })();
