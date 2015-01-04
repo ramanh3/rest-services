@@ -20,6 +20,19 @@
         };
     });
 
+    phoneBookApp.config(function ($routeProvider, $httpProvider) {
+  	  $httpProvider.interceptors.push(function($q,$rootScope) {
+  	    return {
+  	     	'responseError': function(response) {
+  	        	var errorInfo = response.data;
+  	            console.info('Error code' + errorInfo.errorCode + ": " + errorInfo.errorMessage);
+  	            $rootScope.errorInfo = errorInfo;
+  	            return $q.reject(response);
+  	      }
+  	    };
+  	  });
+    });
+    
     phoneBookApp.config(function ($routeProvider) {
         $routeProvider
 		// route for the about page
